@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="index.css">
+
+    <title>Currency Converter</title>
+  </head>
+  <body class="text-center p-3">
+    <div class="offline-notification p-3 m-4 d-none">
+      You appear to be offline.
+    </div>
+    <h4 class="p-3 mb-5">Currency Converter</h4>
+    <div class="conversion-board d-none">
+      <span class="from-box">
+        <sup>¥</sup>
+        <span>00.00</span>
+      </span>
+      <svg class="convert-icon" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+        <path d="M5 0v2h-5v1h5v2l3-2.53-3-2.47z" transform="translate(0 1)" />
+      </svg>
+      <span class="to-box">
+        <sup>¥</sup>
+        <span>00.00</span>
+      </span>
+    </div>
+    <div class="card col-md-10 col-sm-12 col-lg-7 col-xl-6 mx-auto p-5 mt-5">
+      <div class="row">
+        <div class="form-group col-md-6 col-sm-12">
+          <select class="form-control currency-select" id="from-currency" placeholder="From Currency">
+            <option disabled selected>From Currency</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6 col-sm-12">
+          <select class="form-control currency-select" id="to-currency" placeholder="From Currency">
+            <option disabled selected>To Currency</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-9 col-sm-12">
+          <input type="text" class="form-control" id="amount" placeholder="Enter Amount"/>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <button class="btn btn-primary col-sm-12 float-right convert-button">Convert</button>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="idb.js"></script>
+    <script>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(reg) {
+          if (!navigator.serviceWorker.controller) {
+            return;
+          }
+
+          if (reg.waiting) {
+            updateReady(reg.waiting);
+            return;
+          }
+
+          if (reg.installing) {
+            trackInstalling(reg.installing);
+            return;
+          }
+
+          reg.addEventListener('updatefound', function() {
+            trackInstalling(reg.installing);
+          });
+        });
+
+        let refreshing;
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+          if (refreshing) return;
+          window.location.reload();
+          refreshing = true;
+        });
+      }
+
+      const updateReady = (worker) => {
+        const shouldUpdate = confirm('New Version Available! Update?');
+        if (shouldUpdate) worker.postMessage({ action: 'skipWaiting' });
+      }
+
+      const trackInstalling = (worker) => {
+        worker.addEventListener('statechange', function() {
+          if (worker.state == 'installed') {
+            updateReady(worker);
+          }
+        });
+      }
+
+      window.addEventListener("offline", function(e) {
+        $('.offline-notification').removeClass('d-none');
+      }, false);
+
+      window.addEventListener("online", function(e) {
+        $('.offline-notification').addClass('d-none');
+      }, false);
+
+      if (!window.navigator.onLine) {
+        $('.offline-notification').removeClass('d-none');
+      }
+    </script>
+    <!-- Page JS -->
+    <script src="index.js"></script>
+  </body>
+</html>

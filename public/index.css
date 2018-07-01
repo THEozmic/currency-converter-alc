@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Song+Myung');
+
+body {
+  background-color: var(--light);
+  color: #546E7A !important;
+  fill: #546E7A !important;
+}
+
+.btn-primary {
+  color: hsl(199, 26%, 90%);
+  background-color: hsl(199, 18%, 40%);
+  border-color: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.btn-primary:hover, .btn-primary:active {
+  color: hsl(199, 19%, 28%) !important;
+  background-color: hsl(199, 27%, 82%) !important;
+  border-color: transparent !important;
+}
+
+.btn-primary:focus, .btn-primary:active, input:focus, select:focus {
+  box-shadow: 0 0 0 0.2rem rgb(240, 242, 242) !important;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 15px 35px 0 rgba(42,51,83,.12), 0 5px 15px rgba(0,0,0,.06);
+  transition: all .15s ease;
+}
+
+.card:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+select, input {
+  border: none !important;
+  background-color: #e0e8ec !important;
+  color: #546E7A !important;
+}
+
+.from-box, .to-box {
+  font-size: 50px;
+  font-weight: bold;
+  font-family: 'Song Myung', serif;
+}
+
+.from-box > sup, .to-box > sup {
+  font-weight: normal;
+  font-size: 24px;
+  vertical-align: super;
+  margin-right: -10px;
+}
+
+
+.convert-icon {
+  width: 50px;
+  height: 25px;
+  fill: #546e7a8a;
+}
+
+.offline-notification {
+  display: inline-block;
+  background-color: #E91E63;
+  border-radius: 3px;
+  color: #ffffff;
+  position: fixed;
+  left: 20px;
+  z-index: 99999;
+}
