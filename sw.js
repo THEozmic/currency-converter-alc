@@ -5,6 +5,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(staticCacheName).then((cache) => {
       return cache.addAll([
+        '/',
+        'https://theozmic.github.io/currency-converter-alc',
         'index.html',
         'index.js',
         'index.css',
